@@ -10,5 +10,9 @@
   {
     "from": "/contact.php",
     "to": "/contact/"
+  },
+  {
+    "from": "/old-gallery.php",
+    "to": "/gallery/"
   }
 ]
