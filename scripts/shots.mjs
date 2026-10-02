@@ -3,7 +3,7 @@ import { chromium } from 'playwright';
 import { mkdirSync } from 'node:fs';
 
 const [base = 'http://127.0.0.1:4321', out = 'shots', ...paths] = process.argv.slice(2);
-const pages = paths.length ? paths : ['/', '/events/', '/events/2026-10-06-tuesday-night-swing/'];
+const pages = paths.length ? paths : ['/', '/events/', '/events/2026-10-08-thursday-night-swing/'];
 const views = [
   { name: 'mobile', width: 390, height: 844, scheme: 'light' },
   { name: 'mobile-dark', width: 390, height: 844, scheme: 'dark' },

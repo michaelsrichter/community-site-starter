@@ -6,7 +6,7 @@
       "url": [
         "http://127.0.0.1:4322/",
         "http://127.0.0.1:4322/events/",
-        "http://127.0.0.1:4322/events/series/tuesday-night-swing/",
+        "http://127.0.0.1:4322/events/series/thursday-night-swing/",
         "http://127.0.0.1:4322/new-to-swing/"
       ],
       "numberOfRuns": 3,

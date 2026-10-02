@@ -11,7 +11,7 @@ describe('series occurrences and overrides', () => {
       title: 'Band Night: Playing Favorites',
       series: 'thursday-night-swing',
       occurrenceDate: '2026-10-13',
-      bandName: 'playing-favorites',
+      bandName: 'moonlight-jump-band',
       admissionMember: 15,
       admissionStudent: 10,
       admissionNonMember: 20,
@@ -38,7 +38,7 @@ describe('series occurrences and overrides', () => {
   it('lets an override change the title, band and prices while inheriting the rest', () => {
     const o = all[1]!;
     expect(o.title).toBe('Band Night: Playing Favorites');
-    expect(o.details.bandName).toBe('playing-favorites');
+    expect(o.details.bandName).toBe('moonlight-jump-band');
     expect(o.details.admissionNonMember).toBe(20);
     expect(o.details.venue).toBe('riverbend-community-hall');
     expect(o.details.lessonStartTime).toBe('19:30');
