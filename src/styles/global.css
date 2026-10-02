@@ -905,3 +905,16 @@
   .theme-choice--footer .chip input:checked + span { background: var(--c-on-night); color: var(--c-night); border-color: var(--c-on-night); }
   .theme-choice--footer .theme-choice__hint { color: var(--c-on-night-soft); }
 }
+
+/* Very narrow phones: the header must fit any organization name and any system font.
+   The brand text may shrink and hyphenate; the Menu button and logo get a little smaller. */
+@layer components {
+  .site-header__inner > .brand { min-width: 0; flex-shrink: 1; }
+  .brand__text { min-width: 0; }
+  .brand__name { overflow-wrap: break-word; hyphens: auto; }
+  @media (max-width: 22.49rem) {
+    .brand__mark { width: 2rem; height: 2rem; }
+    .brand__name { font-size: 0.95rem; }
+    .js .nav__toggle { padding: 0 0.7rem; gap: 0.35rem; }
+  }
+}
