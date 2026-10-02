@@ -17,7 +17,8 @@ env:
   # A fixed "now" makes end-to-end results repeatable. Deployment builds use the real time.
   BUILD_NOW: '2026-10-01T22:00:00-04:00'
   SITE_URL: https://example.org
-  ALLOW_INDEXING: 'false'
+  # Lighthouse's SEO score needs indexable pages; deploy builds keep indexing off until launch.
+  ALLOW_INDEXING: 'true'
 
 jobs:
   quality:
