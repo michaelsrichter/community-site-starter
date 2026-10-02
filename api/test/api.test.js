@@ -2,6 +2,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { validate, createRateLimiter } = require('../src/telemetry-validate');
+const telemetrySetup = require('../src/telemetry-setup');
 
 // Capture function handlers without starting the Functions host.
 const functions = require('@azure/functions');
@@ -16,6 +17,12 @@ const ctx = { warn() {}, log() {} };
 function req(url, headers = {}, body) {
   return new Request(url, { method: body ? 'POST' : 'GET', headers, body });
 }
+
+test('metrics prefix defaults to site and rejects unsafe values', () => {
+  assert.equal(telemetrySetup.metricsPrefix, 'site');
+  assert.equal(telemetrySetup.cleanPrefix('club'), 'club');
+  assert.equal(telemetrySetup.cleanPrefix('bad prefix!'), 'site');
+});
 
 test('accepts a valid telemetry batch and strips unknown fields', () => {
   const r = validate(

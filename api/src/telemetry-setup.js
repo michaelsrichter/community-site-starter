@@ -23,22 +23,28 @@ if (conn) {
   }
 }
 
-const meter = metrics.getMeter('home.web', '1.0.0');
-const logger = logs.getLogger('home.web', '1.0.0');
+function cleanPrefix(value) {
+  const raw = String(value || 'site').trim();
+  return /^[A-Za-z][A-Za-z0-9_.-]{0,40}$/.test(raw) ? raw : 'site';
+}
+
+const metricsPrefix = cleanPrefix(process.env.METRICS_PREFIX);
+const meter = metrics.getMeter(`${metricsPrefix}.web`, '1.0.0');
+const logger = logs.getLogger(`${metricsPrefix}.web`, '1.0.0');
 
 const instruments = {
-  pageViews: meter.createCounter('home.web.page_views', { description: 'Page views (cookieless, anonymous)', unit: '{view}' }),
-  interactions: meter.createCounter('home.web.interactions', { description: 'Visitor actions such as add to calendar, share and directions', unit: '{action}' }),
-  eventViews: meter.createCounter('home.web.event_views', { description: 'Event detail page views', unit: '{view}' }),
-  consent: meter.createCounter('home.web.consent_updates', { description: 'Analytics consent choices', unit: '{choice}' }),
-  rejected: meter.createCounter('home.telemetry.rejected', { description: 'Telemetry requests rejected by validation or rate limits', unit: '{request}' }),
-  cmsAuth: meter.createCounter('home.cms.auth', { description: 'Decap CMS GitHub sign-in attempts', unit: '{attempt}' }),
+  pageViews: meter.createCounter(`${metricsPrefix}.web.page_views`, { description: 'Page views (cookieless, anonymous)', unit: '{view}' }),
+  interactions: meter.createCounter(`${metricsPrefix}.web.interactions`, { description: 'Visitor actions such as add to calendar, share and directions', unit: '{action}' }),
+  eventViews: meter.createCounter(`${metricsPrefix}.web.event_views`, { description: 'Event detail page views', unit: '{view}' }),
+  consent: meter.createCounter(`${metricsPrefix}.web.consent_updates`, { description: 'Analytics consent choices', unit: '{choice}' }),
+  rejected: meter.createCounter(`${metricsPrefix}.telemetry.rejected`, { description: 'Telemetry requests rejected by validation or rate limits', unit: '{request}' }),
+  cmsAuth: meter.createCounter(`${metricsPrefix}.cms.auth`, { description: 'Decap CMS GitHub sign-in attempts', unit: '{attempt}' }),
   vitals: {
-    LCP: meter.createHistogram('home.web.vitals.lcp', { description: 'Largest Contentful Paint', unit: 'ms' }),
-    INP: meter.createHistogram('home.web.vitals.inp', { description: 'Interaction to Next Paint', unit: 'ms' }),
-    CLS: meter.createHistogram('home.web.vitals.cls', { description: 'Cumulative Layout Shift x 1000', unit: '1' }),
-    FCP: meter.createHistogram('home.web.vitals.fcp', { description: 'First Contentful Paint', unit: 'ms' }),
-    TTFB: meter.createHistogram('home.web.vitals.ttfb', { description: 'Time to First Byte', unit: 'ms' }),
+    LCP: meter.createHistogram(`${metricsPrefix}.web.vitals.lcp`, { description: 'Largest Contentful Paint', unit: 'ms' }),
+    INP: meter.createHistogram(`${metricsPrefix}.web.vitals.inp`, { description: 'Interaction to Next Paint', unit: 'ms' }),
+    CLS: meter.createHistogram(`${metricsPrefix}.web.vitals.cls`, { description: 'Cumulative Layout Shift x 1000', unit: '1' }),
+    FCP: meter.createHistogram(`${metricsPrefix}.web.vitals.fcp`, { description: 'First Contentful Paint', unit: 'ms' }),
+    TTFB: meter.createHistogram(`${metricsPrefix}.web.vitals.ttfb`, { description: 'Time to First Byte', unit: 'ms' }),
   },
 };
 
@@ -60,6 +66,8 @@ async function flush(timeoutMs = 1500) {
 
 module.exports = {
   instruments,
+  metricsPrefix,
+  cleanPrefix,
   customEvent,
   flush,
   get enabled() {
