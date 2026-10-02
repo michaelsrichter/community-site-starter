@@ -315,6 +315,7 @@ Playwright uses the built site through Astro preview. It covers visitor journeys
 | Build fails on inline styles | CSP guard found `style=""` in generated HTML | Move styling to CSS classes. |
 | Playwright port busy | A preview server is already running on 4321 | Stop it or set `E2E_PORT`. |
 | Rare Windows build crash with a libuv assertion | Known intermittent platform issue | Re-run the same build command. |
+| CI step "Lockfiles use the public npm registry" fails, or Dependabot reports `private_source_authentication_failure` | `npm install` ran on a machine that uses a private npm mirror (company proxy, Azure Artifacts, Artifactory), which wrote the mirror's URLs into `package-lock.json` | Run `npm run lockfile:normalize` and commit. Installs on that machine still go through the mirror. |
 
 ## Cost
 
